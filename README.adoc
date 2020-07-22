@@ -1,3 +1,16 @@
+= GLuaSrcDiet
+Small alteration of LuaSrcDiet that handles some of GLua's added operators and keyword aliases. Specifically:
+* `&&` (alias of `and`)
+* `||` (alias of `or`)
+* `!=` (alias of `~=`)
+* `!` (pseudo-alias of `not`)
+Syntax that is *not* handled:
+* `//` (alias of `--`)
+* `/* */` (alias of `--[[ ]]`)
+* `continue`
+
+***
+
 = LuaSrcDiet
 :toc: macro
 :toc-title:
