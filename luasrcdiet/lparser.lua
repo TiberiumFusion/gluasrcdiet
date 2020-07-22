@@ -70,16 +70,16 @@ local binopr_right = {}         -- binary operators, right priority
 for op, lt, rt in gmatch([[
 {+ 6 6}{- 6 6}{* 7 7}{/ 7 7}{% 7 7}
 {^ 10 9}{.. 5 4}
-{~= 3 3}{== 3 3}
+{~= 3 3}{!= 3 3}{== 3 3}
 {< 3 3}{<= 3 3}{> 3 3}{>= 3 3}
-{and 2 2}{or 1 1}
+{and 2 2}{&& 2 2}{or 1 1}{|| 1 1}
 ]], "{(%S+)%s(%d+)%s(%d+)}") do
   binopr_left[op] = lt + 0
   binopr_right[op] = rt + 0
 end
 
 local unopr = { ["not"] = true, ["-"] = true,
-                ["#"] = true, } -- unary operators
+                ["#"] = true, ["!"] = true } -- unary operators
 local UNARY_PRIORITY = 8        -- priority for unary operators
 
 --[[--------------------------------------------------------------------

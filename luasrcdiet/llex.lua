@@ -26,8 +26,8 @@ local M = {}
 
 local kw = {}
 for v in ([[
-and break do else elseif end false for function goto if in
-local nil not or repeat return then true until while]]):gmatch("%S+") do
+and && break do else elseif end false for function goto if in
+local nil not ! or || repeat return then true until while]]):gmatch("%S+") do
   kw[v] = true
 end
 
@@ -239,6 +239,27 @@ function M.lex(source, source_name)
         end
         break -- (continue)
       end
+	  
+      local _, q = find(z, "^&&", i)
+      if q then
+        I = q + 1
+        addtoken("TK_KEYWORD", "&&")
+        break -- (continue)
+      end
+	  
+      local _, q = find(z, "^||", i)
+      if q then
+        I = q + 1
+        addtoken("TK_KEYWORD", "||")
+        break -- (continue)
+      end
+	  
+      local _, q = find(z, "^!=", i)
+      if q then
+        I = q + 1
+        addtoken("TK_OP", "!=")
+        break -- (continue)
+      end
 
       local p, _, r = find(z, "^(%.?)%d", i)
       if p then                                 -- numeral
@@ -337,7 +358,11 @@ function M.lex(source, source_name)
       local r = sub(z, i, i)
       if r ~= "" then
         I = i + 1
-        addtoken("TK_OP", r)                    -- other single-char tokens
+		if (r == "!") then
+			addtoken("TK_KEYWORD", "!")
+		else
+			addtoken("TK_OP", r)                    -- other single-char tokens
+		end
         break
       end
       addtoken("TK_EOS", "")                    -- end of stream,

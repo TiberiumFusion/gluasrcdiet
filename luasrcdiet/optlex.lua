@@ -113,6 +113,10 @@ end
 -- @treturn string
 local function checkpair(i, j)
   local t1, t2 = stoks[i], stoks[j]
+  local op, op2 = sinfos[i], sinfos[j]
+
+  if (op1 == "!") then return "" end
+  if (op2 == "!") then return " " end
 
   if t1 == "TK_STRING" or t1 == "TK_LSTRING" or
      t2 == "TK_STRING" or t2 == "TK_LSTRING" then
@@ -125,7 +129,6 @@ local function checkpair(i, j)
     end
     if t1 == "TK_OP" and t2 == "TK_OP" then
       -- for TK_OP/TK_OP pairs, see notes in technotes.txt
-      local op, op2 = sinfos[i], sinfos[j]
       if (match(op, "^%.%.?$") and match(op2, "^%.")) or
          (match(op, "^[~=<>]$") and op2 == "=") or
          (op == "[" and (op2 == "[" or op2 == "=")) then
@@ -134,8 +137,8 @@ local function checkpair(i, j)
       return ""
     end
     -- "TK_OP" + "TK_NUMBER" case
-    local op = sinfos[i]
-    if t2 == "TK_OP" then op = sinfos[j] end
+    local opA = sinfos[i]
+    if t2 == "TK_OP" then opA = sinfos[j] end
     if match(op, "^%.%.?%.?$") then
       return " "
     end

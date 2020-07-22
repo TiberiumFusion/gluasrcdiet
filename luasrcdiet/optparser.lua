@@ -41,8 +41,8 @@ local ALPHANUM = "etaoinshrdlucmfwypvbgkqjxz_0123456789ETAOINSHRDLUCMFWYPVBGKQJX
 -- (The first two lines are for keywords.)
 local SKIP_NAME = {}
 for v in ([[
-and break do else elseif end false for function if in
-local nil not or repeat return then true until while
+and && break do else elseif end false for function if in
+local nil not ! or || repeat return then true until while
 self _ENV]]):gmatch("%S+") do
   SKIP_NAME[v] = true
 end
