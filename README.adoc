@@ -1,5 +1,7 @@
 = GLuaSrcDiet
+
 Small alteration of LuaSrcDiet that handles some of GLua's added operators and keyword aliases. Specifically:
+
 * `&&` (alias of `and`)
 * `||` (alias of `or`)
 * `!=` (alias of `~=`)
